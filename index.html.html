@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cadência Comercial — Indfiltros</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root{
+  --paper:#0E1530;
+  --surface:#171E44;
+  --surface-alt:#1E2752;
+  --ink:#F2F5FC;
+  --ink-soft:#A6B0D6;
+  --line:#2C3566;
+  --teal:#1CA7DE;
+  --teal-deep:#5FCBF2;
+  --amber:#E3A052;
+  --teal-soft:rgba(28,167,222,0.14);
+  --on-accent:#081226;
+  --radius:2px;
+}
+
+*{box-sizing:border-box; margin:0; padding:0;}
+
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Inter', sans-serif;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+
+.wrap{ max-width:900px; margin:0 auto; padding:0 28px; }
+
+/* ---------- header ---------- */
+header.hero{
+  border-bottom:1px solid var(--line);
+  padding:52px 0 36px;
+}
+.brand-mark{ display:flex; align-items:center; gap:10px; margin-bottom:26px; }
+.brand-mark .box{
+  background:var(--teal); color:var(--on-accent);
+  font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:13px;
+  padding:5px 10px; border-radius:3px; letter-spacing:.02em;
+}
+.brand-mark .word{
+  font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px;
+  color:var(--ink); letter-spacing:.03em;
+}
+.eyebrow{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--teal-deep);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:20px;
+}
+.eyebrow::before{ content:""; width:22px; height:1px; background:var(--teal); }
+.scope-tag{
+  font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:.04em;
+  color:var(--teal-deep); background:var(--teal-soft);
+  padding:3px 9px; border-radius:20px; text-transform:none;
+}
+h1{
+  font-family:'Space Grotesk', sans-serif;
+  font-weight:700;
+  font-size:clamp(28px, 4.5vw, 40px);
+  line-height:1.1;
+  letter-spacing:-.01em;
+  max-width:20ch;
+}
+.lede{ margin-top:16px; max-width:58ch; font-size:16px; color:var(--ink-soft); }
+
+/* ---------- sections ---------- */
+section{ padding:48px 0; border-bottom:1px solid var(--line); }
+section:last-of-type{ border-bottom:none; }
+h2{
+  font-family:'Space Grotesk', sans-serif;
+  font-size:24px;
+  font-weight:700;
+  letter-spacing:-.01em;
+  margin-bottom:8px;
+}
+.section-note{ font-size:14px; color:var(--ink-soft); max-width:52ch; margin-bottom:26px; }
+
+/* ---------- abordagem inicial (card único) ---------- */
+.initial-card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-left:3px solid var(--teal);
+  border-radius:var(--radius);
+  padding:22px 24px;
+}
+.initial-card .chan-tag{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  color:var(--teal-deep);
+  background:var(--teal-soft);
+  padding:3px 9px;
+  border-radius:20px;
+  display:inline-block;
+  margin-bottom:14px;
+}
+.initial-card p{ white-space:pre-wrap; font-size:15px; line-height:1.65; overflow-wrap:break-word; }
+
+/* ---------- toggle ---------- */
+.toggle-group{
+  display:inline-flex;
+  border:1px solid var(--line);
+  border-radius:24px;
+  overflow:hidden;
+  margin-bottom:30px;
+}
+.toggle-btn{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12.5px;
+  padding:9px 18px;
+  background:var(--surface);
+  border:none;
+  color:var(--ink-soft);
+  cursor:pointer;
+}
+.toggle-btn.active{ background:var(--teal); color:var(--on-accent); }
+
+/* ---------- cadence timeline ---------- */
+.timeline{ position:relative; }
+.timeline::before{
+  content:"";
+  position:absolute;
+  left:19px; top:8px; bottom:8px;
+  width:1px;
+  background:var(--line);
+}
+.touch{ position:relative; padding-left:56px; margin-bottom:4px; }
+.touch-head{ display:flex; align-items:center; gap:16px; cursor:pointer; padding:14px 0; }
+.touch-num{
+  position:absolute; left:0; top:14px;
+  width:40px; height:40px; border-radius:50%;
+  background:var(--surface); border:1.5px solid var(--line);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'IBM Plex Mono', monospace; font-size:12px; font-weight:600;
+  color:var(--ink-soft);
+  transition:border-color .2s ease, color .2s ease;
+}
+.touch.open .touch-num{ border-color:var(--teal); color:var(--teal-deep); background:var(--teal-soft); }
+.touch-when{
+  font-family:'IBM Plex Mono', monospace; font-size:11px;
+  color:var(--teal-deep); background:var(--teal-soft);
+  padding:3px 8px; border-radius:3px; white-space:nowrap;
+}
+.touch-title{ font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:16px; flex:1; }
+.touch-chevron{ font-size:13px; color:var(--ink-soft); transition:transform .2s ease; }
+.touch.open .touch-chevron{ transform:rotate(180deg); }
+.touch-body{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+.touch.open .touch-body{ max-height:700px; }
+.touch-inner{ padding:2px 0 26px; }
+.touch-goal{ font-size:14px; color:var(--ink-soft); margin-bottom:16px; border-left:2px solid var(--amber); padding-left:12px; }
+
+.script-box{
+  background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+  padding:18px 20px; font-size:14.5px; line-height:1.6;
+  white-space:pre-wrap; overflow-wrap:break-word; word-break:break-word;
+  display:none;
+}
+.script-box.active{ display:block; }
+
+/* ---------- exec rules ---------- */
+.rules{ list-style:none; counter-reset:rule; margin-top:26px; }
+.rules li{
+  counter-increment:rule;
+  display:flex; align-items:flex-start; gap:14px;
+  padding:16px 0; border-top:1px solid var(--line);
+  font-size:14.5px; color:var(--ink-soft);
+}
+.rules li:last-child{ border-bottom:1px solid var(--line); }
+.rules li::before{
+  content:counter(rule, decimal-leading-zero);
+  flex:0 0 auto;
+  width:34px;
+  font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--amber); font-weight:600;
+}
+.rules li .rule-text{ flex:1 1 auto; min-width:0; }
+.rules li b{ color:var(--ink); font-weight:600; }
+
+footer{ padding:36px 0 56px; font-size:12.5px; color:var(--ink-soft); font-family:'IBM Plex Mono', monospace; }
+footer b{ color:var(--ink); }
+
+/* ---------- qualificação (SDR) ---------- */
+.qual-card{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+.qual-card-head{
+  background:var(--teal); color:var(--on-accent);
+  font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:14.5px;
+  padding:13px 18px;
+}
+.qual-list{ list-style:none; padding:6px 20px 18px; }
+.qual-list li{
+  display:flex; gap:10px; padding:16px 0;
+  font-size:13.5px; line-height:1.55; color:var(--ink-soft);
+  border-top:1px solid var(--line);
+}
+.qual-list li:first-child{ border-top:none; }
+.qual-list li b{ color:var(--ink); font-weight:600; }
+.qual-check{ color:var(--teal); flex-shrink:0; margin-top:1px; }
+.qual-msg{
+  margin-top:10px; padding:11px 13px;
+  background:var(--surface-alt); border-left:2px solid var(--teal);
+  font-size:13px; line-height:1.55; color:var(--ink);
+  white-space:pre-wrap;
+}
+.qual-obs{
+  margin-top:20px; padding:13px 16px;
+  border-left:2px solid var(--amber); background:rgba(227,160,82,0.12);
+  font-size:13px; color:#F0C089;
+}
+
+@media (max-width:640px){
+  .touch{ padding-left:46px; }
+  .touch-num{ width:34px; height:34px; left:0; font-size:11px; }
+  .timeline::before{ left:16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="brand-mark"><span class="box">IND</span><span class="word">FILTROS</span></div>
+    <div class="eyebrow">Cadência Comercial <span class="scope-tag">Exclusivo SDR</span></div>
+    <h1>Um único primeiro contato. Duas trilhas de follow-up, dependendo do que o lead responder.</h1>
+    <p class="lede">A abordagem inicial é sempre a mesma, não importa se vira reposição ou sistema novo. É só a partir da resposta do lead que a cadência se separa — cada trilha tem 6 follow-ups pra quando ele some.</p>
+  </header>
+
+  <!-- ================= ABORDAGEM INICIAL ================= -->
+  <section>
+    <h2>Abordagem inicial</h2>
+    <p class="section-note">Mesma mensagem pra qualquer lead — é ela quem identifica se é reposição ou sistema novo.</p>
+    <div class="initial-card">
+      <span class="chan-tag">WhatsApp · Dia 0</span>
+      <p>Oi [Nome], tudo bem? Aqui é [SDR], da Indfiltros.
+
+Vi seu interesse em filtro industrial — pra eu já te direcionar certo: isso é uma reposição de elemento (vocês já têm a carcaça) ou é uma estrutura de filtração nova?</p>
+    </div>
+  </section>
+
+  <!-- ================= QUALIFICAÇÃO ================= -->
+  <section>
+    <h2>O que o SDR precisa levantar</h2>
+    <p class="section-note">4 dados, cada um com a mensagem pronta pra pedir — pode mandar em sequência ou juntar dois numa mensagem só, dependendo do fluxo da conversa.</p>
+
+    <div class="qual-card">
+      <div class="qual-card-head">Perguntas do SDR</div>
+      <ul class="qual-list">
+        <li>
+          <span class="qual-check">✓</span>
+          <span>
+            <b>Qual líquido precisa filtrar:</b> água de rede pública, água de processo industrial, bebida, óleo, produção de água desmineralizada etc.
+            <div class="qual-msg">Oi [Nome], pra eu já te indicar certo: qual o líquido que vocês precisam filtrar? Pode ser água de rede pública, água de processo industrial, bebida, óleo, entre outros.</div>
+          </span>
+        </li>
+        <li>
+          <span class="qual-check">✓</span>
+          <span>
+            <b>O que precisa retirar:</b> partículas sólidas, cloro (gosto e odor), bactérias, vírus (micro-organismo), desmineralização da água.
+            <div class="qual-msg">E o que esse filtro precisa retirar do líquido — partículas sólidas, cloro (gosto e odor), bactérias/vírus, ou é pra desmineralizar a água?</div>
+          </span>
+        </li>
+        <li>
+          <span class="qual-check">✓</span>
+          <span>
+            <b>Vazão (litros/hora):</b> 500, 1.000, 3.000, 5.000, 6.000, 10.000, 15.000, 20.000, 28.000, 44.000 e 60.000.
+            <div class="qual-msg">Qual a vazão aproximada, em litros por hora? Não precisa ser exato, uma faixa já ajuda bastante.</div>
+          </span>
+        </li>
+        <li>
+          <span class="qual-check">✓</span>
+          <span>
+            <b>Temperatura:</b> ambiente, até 60º, até 121º, 270º ou 400º.
+            <div class="qual-msg">E a temperatura de operação — fica na temperatura ambiente, ou chega a esquentar (até 60º, 121º ou mais)?</div>
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="qual-obs"><b>Obs:</b> não executamos projetos para tratamento de água com excesso de ferro, manganês e cálcio.</div>
+  </section>
+
+  <!-- ================= FOLLOW-UPS ================= -->
+  <section>
+    <h2>Follow-ups sem retorno</h2>
+    <p class="section-note">Depois que o lead identifica o tipo de necessidade e some, a trilha muda. Selecione qual caso.</p>
+
+    <div class="toggle-group" id="toggle">
+      <button class="toggle-btn active" data-branch="a">Identificado: reposição</button>
+      <button class="toggle-btn" data-branch="b">Identificado: sistema novo</button>
+    </div>
+
+    <div class="timeline" id="timeline"></div>
+
+    <ul class="rules" id="rules"></ul>
+  </section>
+
+  <footer>
+    Variáveis usadas nos textos: <b>[Nome]</b> · <b>[Empresa]</b> · <b>[SDR]</b> · <b>[Segmento]</b>
+  </footer>
+</div>
+
+<script>
+const DATA = {
+  a: {
+    touches: [
+      {
+        when: "Dia 1",
+        title: "Retomar a pergunta não respondida",
+        goal: "O lead confirmou que é reposição mas não disse o que precisa reter — sem essa resposta não dá pra indicar nada.",
+        message: `Oi [Nome], só retomando — pra eu já separar a opção certa: que líquido vocês precisam filtrar, e o que esse filtro precisa retirar — partículas sólidas, cloro (gosto e odor), bactérias/vírus ou é pra desmineralizar a água?`
+      },
+      {
+        when: "Dia 2",
+        title: "Segunda tentativa",
+        goal: "Reforçar sem repetir o mesmo pretexto do toque anterior — usar o argumento de credibilidade em vez de só cobrar resposta.",
+        message: `Oi [Nome], só retomando por aqui — a Indfiltros tem estrutura própria há 12 anos no mercado, então consigo já te indicar a opção certa rápido. Só preciso saber: que líquido vocês precisam filtrar e o que esse filtro precisa retirar — partículas sólidas, cloro (gosto e odor), bactérias/vírus ou é pra desmineralizar a água?`
+      },
+      {
+        when: "Dia 4",
+        title: "Reforçar o custo de usar o elemento errado",
+        goal: "Ainda sem retorno — trazer um ângulo de valor técnico em vez de repetir a pergunta pela terceira vez.",
+        message: `Oi [Nome], voltando aqui — só um ponto que costuma passar batido: elemento fora da especificação certa (micragem ou material errado pra vazão de vocês) reduz a vida útil da carcaça e pode contaminar o processo antes da hora.
+
+Se quiser, me confirma a vazão aproximada que eu já te falo qual elemento fecha certo com o que vocês têm hoje.`
+      },
+      {
+        when: "Dia 6",
+        title: "Checar se ainda é prioridade",
+        goal: "Entender se sumiu por falta de tempo ou porque não é mais necessidade — sem empurrar decisão.",
+        message: `Oi [Nome], ainda por aqui? Ficou faltando alguma informação da minha parte, ou é mais questão de tempo mesmo?
+
+Só quero entender se posso ajudar em algo antes de seguir — sem pressa.`
+      },
+      {
+        when: "Dia 9",
+        title: "Recap do que já foi levantado",
+        goal: "Consolidar por escrito o que já se sabe, facilitando retomar quando fizer sentido pro lead.",
+        message: `Oi [Nome], deixo aqui um resumo rápido pra facilitar: pelo que conversamos até agora, [o que foi levantado até o momento].
+
+Se surgir alguma dúvida técnica, é só me chamar, o [SDR] responde direto.`
+      },
+      {
+        when: "Dia 13",
+        title: "Breakup",
+        goal: "Encerrar sem parecer insistente, deixando a porta aberta pra recompra.",
+        message: `Oi [Nome], não quero insistir sem necessidade — vou pausar o contato por aqui.
+
+Se em algum momento precisar do elemento pra [Segmento], é só chamar — fico com seu contato salvo e [SDR] te atende direto.`
+      }
+    ],
+    rules: [
+      "Essa régua para na <b>qualificação</b> — nada de condição, prazo de entrega ou fechamento aqui, isso entra numa etapa futura.",
+      "<b>Nunca repita o mesmo pretexto</b> em dois toques — se o lead percebe o padrão, para de responder.",
+      "12 anos de mercado e estrutura própria são fatos reais e podem ser citados — <b>nunca afirmar fabricação própria de um produto específico</b> sem confirmar antes.",
+      "Se o cliente mencionar <b>excesso de ferro, manganês ou cálcio</b> na água, sinalizar que a Indfiltros não executa esse tipo de projeto — não seguir a qualificação."
+    ]
+  },
+  b: {
+    touches: [
+      {
+        when: "Dia 1",
+        title: "Retomar a pergunta não respondida",
+        goal: "O lead confirmou que é sistema novo mas não disse o que precisa resolver — sem isso não dá pra seguir.",
+        message: `Oi [Nome], só retomando — pra eu entender o cenário: que líquido vocês precisam filtrar, e o que esse sistema precisa retirar — partículas sólidas, cloro (gosto e odor), bactérias/vírus ou é pra desmineralizar a água?`
+      },
+      {
+        when: "Dia 2",
+        title: "Aprofundar o diagnóstico por mensagem",
+        goal: "Levantar os primeiros dados técnicos sem empurrar pra ligação — o diagnóstico completo é etapa futura.",
+        message: `Oi [Nome], pelo que você descreveu, consigo já entender melhor o cenário com mais alguns detalhes: qual a vazão aproximada (em litros/hora) e a temperatura de operação do processo?
+
+Não precisa ser exato — é só pra eu direcionar certo o que vem depois.`
+      },
+      {
+        when: "Dia 4",
+        title: "Follow-up se não respondeu",
+        goal: "Reforçar sem repetir a mesma pergunta, dando um caminho mais fácil de responder.",
+        message: `Oi [Nome], só reforçando — mesmo sem os números exatos, uma ideia aproximada da vazão e do que precisa resolver já ajuda a gente a não te indicar algo fora do que vocês precisam.
+
+Consegue me passar isso quando tiver um tempo?`
+      },
+      {
+        when: "Dia 7",
+        title: "Checar se ainda é prioridade",
+        goal: "Entender se o projeto esfriou ou se é só falta de tempo, sem empurrar pra decisão.",
+        message: `Oi [Nome], tudo bem? Isso ainda é uma prioridade pra vocês, ou o momento não é esse agora?
+
+Sem problema nenhum se for a segunda opção — só quero saber se sigo por aqui ou se pauso o contato.`
+      },
+      {
+        when: "Dia 10",
+        title: "Recap do que já foi levantado",
+        goal: "Consolidar por escrito o que já se sabe do cenário, reduzindo o esforço de retomar depois.",
+        message: `Oi [Nome], resumindo o que conversamos até aqui: [problema identificado até o momento]. Ainda falta [dado pendente] pra eu conseguir avançar.
+
+Fico à disposição quando fizer sentido continuar.`
+      },
+      {
+        when: "Dia 14",
+        title: "Breakup",
+        goal: "Encerrar o ciclo ativo sem fechar a porta — sistema completo tem decisão mais longa e pode reabrir depois.",
+        message: `Oi [Nome], vou pausar o contato por aqui pra não insistir à toa. Quando o projeto voltar a ser prioridade, é só me chamar — o que já conversamos continua valendo, não precisa recomeçar do zero.`
+      }
+    ],
+    rules: [
+      "Essa régua para na <b>qualificação</b> — nada de agendar diagnóstico com engenharia, orçamento ou fechamento aqui, isso entra numa etapa futura.",
+      "<b>Nunca repita o mesmo pretexto</b> em dois toques — se o lead percebe o padrão, para de responder.",
+      "12 anos de mercado, laboratório e equipe técnica própria são fatos reais e podem ser citados quando fizer sentido.",
+      "Se o lead responder com dado técnico, <b>confirmar recebimento no mesmo dia</b>, mesmo que seja só \"recebi, te retorno em breve\".",
+      "Se o cliente mencionar <b>excesso de ferro, manganês ou cálcio</b> na água, sinalizar que a Indfiltros não executa esse tipo de projeto — não seguir a qualificação."
+    ]
+  }
+};
+
+let current = 'a';
+
+function escapeHtml(str){
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function renderTimeline(){
+  const el = document.getElementById('timeline');
+  el.innerHTML = '';
+  DATA[current].touches.forEach((t, i) => {
+    const div = document.createElement('div');
+    div.className = 'touch';
+    div.innerHTML = `
+      <div class="touch-num">${i+1}</div>
+      <div class="touch-head">
+        <span class="touch-when">${t.when}</span>
+        <span class="touch-title">${t.title}</span>
+        <span class="touch-chevron">▾</span>
+      </div>
+      <div class="touch-body">
+        <div class="touch-inner">
+          <div class="touch-goal">${t.goal}</div>
+          <div class="script-box active">${escapeHtml(t.message)}</div>
+        </div>
+      </div>
+    `;
+    const head = div.querySelector('.touch-head');
+    head.addEventListener('click', () => div.classList.toggle('open'));
+    el.appendChild(div);
+  });
+}
+
+function renderRules(){
+  document.getElementById('rules').innerHTML = DATA[current].rules.map(r => `<li><span class="rule-text">${r}</span></li>`).join('');
+}
+
+document.querySelectorAll('.toggle-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    current = btn.dataset.branch;
+    document.querySelectorAll('.toggle-btn').forEach(b => b.classList.toggle('active', b === btn));
+    renderTimeline();
+    renderRules();
+  });
+});
+
+renderTimeline();
+renderRules();
+</script>
+</body>
+</html>

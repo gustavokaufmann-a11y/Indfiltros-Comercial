@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cadência Comercial — Indfiltros (Closer)</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root{
+  --paper:#0E1530;
+  --surface:#171E44;
+  --surface-alt:#1E2752;
+  --ink:#F2F5FC;
+  --ink-soft:#A6B0D6;
+  --line:#2C3566;
+  --teal:#1CA7DE;
+  --teal-deep:#5FCBF2;
+  --amber:#E3A052;
+  --teal-soft:rgba(28,167,222,0.14);
+  --on-accent:#081226;
+  --radius:2px;
+}
+
+*{box-sizing:border-box; margin:0; padding:0;}
+
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Inter', sans-serif;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+
+.wrap{ max-width:900px; margin:0 auto; padding:0 28px; }
+
+/* ---------- header ---------- */
+header.hero{
+  border-bottom:1px solid var(--line);
+  padding:52px 0 36px;
+}
+.brand-mark{ display:flex; align-items:center; gap:10px; margin-bottom:26px; }
+.brand-mark .box{
+  background:var(--teal); color:var(--on-accent);
+  font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:13px;
+  padding:5px 10px; border-radius:3px; letter-spacing:.02em;
+}
+.brand-mark .word{
+  font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px;
+  color:var(--ink); letter-spacing:.03em;
+}
+.eyebrow{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--teal-deep);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:20px;
+}
+.eyebrow::before{ content:""; width:22px; height:1px; background:var(--teal); }
+.scope-tag{
+  font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:.04em;
+  color:var(--teal-deep); background:var(--teal-soft);
+  padding:3px 9px; border-radius:20px; text-transform:none;
+}
+h1{
+  font-family:'Space Grotesk', sans-serif;
+  font-weight:700;
+  font-size:clamp(28px, 4.5vw, 40px);
+  line-height:1.1;
+  letter-spacing:-.01em;
+  max-width:20ch;
+}
+.lede{ margin-top:16px; max-width:58ch; font-size:16px; color:var(--ink-soft); }
+
+/* ---------- sections ---------- */
+section{ padding:48px 0; border-bottom:1px solid var(--line); }
+section:last-of-type{ border-bottom:none; }
+h2{
+  font-family:'Space Grotesk', sans-serif;
+  font-size:24px;
+  font-weight:700;
+  letter-spacing:-.01em;
+  margin-bottom:8px;
+}
+.section-note{ font-size:14px; color:var(--ink-soft); max-width:52ch; margin-bottom:26px; }
+
+/* ---------- abordagem inicial (card único) ---------- */
+.initial-card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-left:3px solid var(--teal);
+  border-radius:var(--radius);
+  padding:22px 24px;
+}
+.initial-card .chan-tag{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  color:var(--teal-deep);
+  background:var(--teal-soft);
+  padding:3px 9px;
+  border-radius:20px;
+  display:inline-block;
+  margin-bottom:14px;
+}
+.initial-card p{ white-space:pre-wrap; font-size:15px; line-height:1.65; overflow-wrap:break-word; }
+
+/* ---------- toggle ---------- */
+.toggle-group{
+  display:inline-flex;
+  border:1px solid var(--line);
+  border-radius:24px;
+  overflow:hidden;
+  margin-bottom:30px;
+}
+.toggle-btn{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12.5px;
+  padding:9px 18px;
+  background:var(--surface);
+  border:none;
+  color:var(--ink-soft);
+  cursor:pointer;
+}
+.toggle-btn.active{ background:var(--teal); color:var(--on-accent); }
+
+/* ---------- cadence timeline ---------- */
+.timeline{ position:relative; }
+.timeline::before{
+  content:"";
+  position:absolute;
+  left:19px; top:8px; bottom:8px;
+  width:1px;
+  background:var(--line);
+}
+.touch{ position:relative; padding-left:56px; margin-bottom:4px; }
+.touch-head{ display:flex; align-items:center; gap:16px; cursor:pointer; padding:14px 0; }
+.touch-num{
+  position:absolute; left:0; top:14px;
+  width:40px; height:40px; border-radius:50%;
+  background:var(--surface); border:1.5px solid var(--line);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'IBM Plex Mono', monospace; font-size:12px; font-weight:600;
+  color:var(--ink-soft);
+  transition:border-color .2s ease, color .2s ease;
+}
+.touch.open .touch-num{ border-color:var(--teal); color:var(--teal-deep); background:var(--teal-soft); }
+.touch-when{
+  font-family:'IBM Plex Mono', monospace; font-size:11px;
+  color:var(--teal-deep); background:var(--teal-soft);
+  padding:3px 8px; border-radius:3px; white-space:nowrap;
+}
+.touch-title{ font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:16px; flex:1; }
+.touch-chevron{ font-size:13px; color:var(--ink-soft); transition:transform .2s ease; }
+.touch.open .touch-chevron{ transform:rotate(180deg); }
+.touch-body{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+.touch.open .touch-body{ max-height:700px; }
+.touch-inner{ padding:2px 0 26px; }
+.touch-goal{ font-size:14px; color:var(--ink-soft); margin-bottom:16px; border-left:2px solid var(--amber); padding-left:12px; }
+
+.script-box{
+  background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+  padding:18px 20px; font-size:14.5px; line-height:1.6;
+  white-space:pre-wrap; overflow-wrap:break-word; word-break:break-word;
+  display:none;
+}
+.script-box.active{ display:block; }
+
+/* ---------- exec rules ---------- */
+.rules{ list-style:none; counter-reset:rule; margin-top:26px; }
+.rules li{
+  counter-increment:rule;
+  display:flex; align-items:flex-start; gap:14px;
+  padding:16px 0; border-top:1px solid var(--line);
+  font-size:14.5px; color:var(--ink-soft);
+}
+.rules li:last-child{ border-bottom:1px solid var(--line); }
+.rules li::before{
+  content:counter(rule, decimal-leading-zero);
+  flex:0 0 auto;
+  width:34px;
+  font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--amber); font-weight:600;
+}
+.rules li .rule-text{ flex:1 1 auto; min-width:0; }
+.rules li b{ color:var(--ink); font-weight:600; }
+
+footer{ padding:36px 0 56px; font-size:12.5px; color:var(--ink-soft); font-family:'IBM Plex Mono', monospace; }
+footer b{ color:var(--ink); }
+
+/* ---------- qualificação (SDR) ---------- */
+.qual-card{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+.qual-card-head{
+  background:var(--teal); color:var(--on-accent);
+  font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:14.5px;
+  padding:13px 18px;
+}
+.qual-list{ list-style:none; padding:6px 20px 18px; }
+.qual-list li{
+  display:flex; gap:10px; padding:16px 0;
+  font-size:13.5px; line-height:1.55; color:var(--ink-soft);
+  border-top:1px solid var(--line);
+}
+.qual-list li:first-child{ border-top:none; }
+.qual-list li b{ color:var(--ink); font-weight:600; }
+.qual-check{ color:var(--teal); flex-shrink:0; margin-top:1px; }
+.qual-msg{
+  margin-top:10px; padding:11px 13px;
+  background:var(--surface-alt); border-left:2px solid var(--teal);
+  font-size:13px; line-height:1.55; color:var(--ink);
+  white-space:pre-wrap;
+}
+.qual-obs{
+  margin-top:20px; padding:13px 16px;
+  border-left:2px solid var(--amber); background:rgba(227,160,82,0.12);
+  font-size:13px; color:#F0C089;
+}
+
+@media (max-width:640px){
+  .touch{ padding-left:46px; }
+  .touch-num{ width:34px; height:34px; left:0; font-size:11px; }
+  .timeline::before{ left:16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="brand-mark"><span class="box">IND</span><span class="word">FILTROS</span></div>
+    <div class="eyebrow">Cadência Comercial <span class="scope-tag">Exclusivo Closer</span></div>
+    <h1>Do levantamento técnico ao fechamento — depois que o SDR já roteou o lead.</h1>
+    <p class="lede">O closer entra depois que o SDR já sabe se é reposição ou sistema novo. A partir daí, o trabalho é levantar os dados técnicos e conduzir até orçamento ou proposta — isso já pode acontecer aqui, diferente do material do SDR.</p>
+  </header>
+
+  <!-- ================= ABORDAGEM INICIAL ================= -->
+  <section>
+    <h2>Mensagem de abertura</h2>
+    <p class="section-note">Enviada assim que o SDR passa o roteamento — apresenta o closer e avisa que os dados técnicos vêm um de cada vez.</p>
+    <div class="initial-card">
+      <span class="chan-tag">WhatsApp · assim que o SDR roteia</span>
+      <p>Oi [Nome], tudo bem? Aqui é [Closer], da Indfiltros — o [SDR] já me passou o que vocês precisam filtrar.
+
+Pra fechar a especificação certinha, preciso de mais alguns dados técnicos. Vou te mandar um de cada vez, pra ficar mais fácil de responder.</p>
+    </div>
+  </section>
+
+  <!-- ================= QUALIFICAÇÃO ================= -->
+  <section>
+    <h2>O que o closer precisa levantar</h2>
+    <p class="section-note">5 dados técnicos, cada um com a mensagem pronta pra pedir.</p>
+
+    <div class="qual-card">
+      <div class="qual-card-head">Perguntas do Closer</div>
+      <ul class="qual-list">
+        <li>
+          <span class="qual-check">✓</span>
+          <span>
+            <b>Grau de filtração:</b> 0,22 · 0,45 · 1 · 5 · 10 · 25 · 50 · 75 · 100 · 150 · 200 · 300 · 1.000 · 1.500 mícrons.
+            <div class="qual-msg">Vocês já têm um grau de filtração definido (em mícrons), ou querem que eu indique com base no que precisa ser retido?</div>
+          </span>
+        </li>
+        <li>
+          <span class="qual-check">✓</span>
+          <span>
+            <b>Diâmetro da tubulação:</b> ¼", ½", ¾", 1", 1½", 2" ou 3".
+            <div class="qual-msg">Qual o diâmetro da tubulação onde o filtro vai ser instalado — ¼", ½", ¾", 1", 1½", 2" ou 3"?</div>
+          </span>
+        </li>
+        <li>
+          <span class="qual-check">✓</span>
+          <span>
+            <b>Material da tubulação:</b> PVC ou Inox 304.
+            <div class="qual-msg">E o material da tubulação: é PVC ou Inox 304?</div>
+          </span>
+        </li>
+        <li>
+          <span class="qual-check">✓</span>
+          <span>
+            <b>Conexão:</b> Rosca BSP, SMS, Flange ou Triclamp.
+            <div class="qual-msg">Qual o tipo de conexão — rosca BSP, SMS, flange ou triclamp?</div>
+          </span>
+        </li>
+        <li>
+          <span class="qual-check">✓</span>
+          <span>
+            <b>Pressão:</b> quantos kgf/cm² tem na instalação — até 7kgf/cm² ou até 10kgf/cm².
+            <div class="qual-msg">Por último: quantos kgf/cm² de pressão tem na instalação? Pode ser uma estimativa — até 7kgf/cm² ou até 10kgf/cm²?</div>
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="qual-obs"><b>Obs:</b> não executamos projetos para tratamento de água com excesso de ferro, manganês e cálcio.</div>
+  </section>
+
+  <!-- ================= FOLLOW-UPS ================= -->
+  <section>
+    <h2>Follow-ups sem retorno</h2>
+    <p class="section-note">Depois que o closer pede os dados técnicos e o lead some, a trilha muda conforme o tipo de necessidade. Selecione qual caso.</p>
+
+    <div class="toggle-group" id="toggle">
+      <button class="toggle-btn active" data-branch="a">Identificado: reposição</button>
+      <button class="toggle-btn" data-branch="b">Identificado: sistema novo</button>
+    </div>
+
+    <div class="timeline" id="timeline"></div>
+
+    <ul class="rules" id="rules"></ul>
+  </section>
+
+  <footer>
+    Variáveis usadas nos textos: <b>[Nome]</b> · <b>[Empresa]</b> · <b>[Closer]</b> · <b>[SDR]</b> · <b>[Segmento]</b>
+  </footer>
+</div>
+
+<script>
+const DATA = {
+  a: {
+    touches: [
+      {
+        when: "Dia 1",
+        title: "Retomar a pergunta técnica pendente",
+        goal: "Sem os dados técnicos não dá pra fechar a especificação exata — cobrar de forma leve, sem repetir a lista toda.",
+        message: `Oi [Nome], só retomando — ainda preciso desses dados técnicos pra fechar a especificação certa. Consegue me passar o que já tiver, mesmo que não seja tudo?`
+      },
+      {
+        when: "Dia 3",
+        title: "Oferecer orçamento preliminar",
+        goal: "Avançar mesmo com dados parciais, mostrando valor concreto em vez de só cobrar resposta.",
+        message: `Oi [Nome], com o que já levantamos até aqui, consigo montar um orçamento preliminar — só te aviso que pode ajustar quando os dados técnicos restantes chegarem. Quer que eu já mande?`
+      },
+      {
+        when: "Dia 5",
+        title: "Envio do orçamento",
+        goal: "Entregar o orçamento formalmente, com escopo e prazo de validade claros.",
+        message: `Oi [Nome], segue o orçamento com base no que conversamos: [resumo do elemento especificado]. Essa condição fica válida até [prazo de validade]. Qualquer ajuste, me chama que a gente revê junto.`
+      },
+      {
+        when: "Dia 7",
+        title: "Checar recebimento e dúvidas",
+        goal: "Confirmar que o orçamento chegou e abrir espaço pra objeções sem empurrar decisão.",
+        message: `Oi [Nome], o orçamento chegou certinho? Ficou alguma dúvida sobre o produto ou sobre prazo de entrega?`
+      },
+      {
+        when: "Dia 10",
+        title: "Reforço de disponibilidade",
+        goal: "Lembrar que a especificação já está fechada e que o envio pode ser rápido assim que confirmarem.",
+        message: `Oi [Nome], só um lembrete: como já temos a especificação fechada, consigo agilizar o envio assim que vocês confirmarem o pedido. Fico à disposição pra qualquer ajuste.`
+      },
+      {
+        when: "Dia 14",
+        title: "Breakup",
+        goal: "Encerrar sem parecer insistente, deixando o orçamento válido pra quando fizer sentido fechar.",
+        message: `Oi [Nome], vou pausar o contato por aqui pra não insistir à toa. O orçamento continua valendo — quando fizer sentido fechar, é só me chamar.`
+      }
+    ],
+    rules: [
+      "Essa régua já pode falar em <b>orçamento, condição e prazo</b> — é papel do closer, diferente da régua do SDR.",
+      "<b>Nunca envie orçamento</b> sem pelo menos o grau de filtração e o diâmetro da tubulação — são os dois dados que mais mudam a especificação.",
+      "12 anos de mercado e estrutura própria são fatos reais e podem ser citados — <b>nunca afirmar fabricação própria de um produto específico</b> sem confirmar antes.",
+      "Se o cliente mencionar <b>excesso de ferro, manganês ou cálcio</b> na água, sinalizar que a Indfiltros não executa esse tipo de projeto."
+    ]
+  },
+  b: {
+    touches: [
+      {
+        when: "Dia 1",
+        title: "Retomar a pergunta técnica pendente",
+        goal: "Sem os dados técnicos não dá pra seguir com o diagnóstico — cobrar de forma leve.",
+        message: `Oi [Nome], só retomando — ainda preciso desses dados técnicos pra seguir com o diagnóstico. Consegue me passar o que já tiver, mesmo que não seja tudo?`
+      },
+      {
+        when: "Dia 3",
+        title: "Propor diagnóstico técnico",
+        goal: "Com o que já foi levantado, avançar pra etapa de diagnóstico com a engenharia.",
+        message: `Oi [Nome], com o que você já me passou dá pra começar o diagnóstico técnico com a nossa engenharia. Topa alinharmos um horário essa semana?`
+      },
+      {
+        when: "Dia 6",
+        title: "Recap pós-diagnóstico e prazo da proposta",
+        goal: "Confirmar entendimento técnico e dar um prazo claro pra proposta, mantendo o lead engajado.",
+        message: `Oi [Nome], valeu pelo alinhamento técnico. Vou fechar a proposta com o dimensionamento certo e te mando até [prazo]. Qualquer parâmetro que faltar, te chamo antes.`
+      },
+      {
+        when: "Dia 9",
+        title: "Envio da proposta técnica",
+        goal: "Entregar a proposta formalmente, com escopo e prazo de validade claros.",
+        message: `Oi [Nome], segue a proposta com o dimensionamento que fechamos: [resumo do escopo — equipamento, capacidade, etapas]. Essa condição fica válida até [prazo de validade]. Qualquer ajuste de escopo, me chama que a gente reavalia junto.`
+      },
+      {
+        when: "Dia 13",
+        title: "Follow-up se a proposta ficou parada",
+        goal: "Reabrir a conversa sem parecer cobrança — oferecendo ajuste de escopo como saída.",
+        message: `Oi [Nome], ficou alguma dúvida na proposta que te mandei? Se o investimento ou o prazo não fecharam do jeito que vocês precisam, dá pra reavaliar o escopo — às vezes a estrutura pode ser faseada em vez de fechada tudo de uma vez.`
+      },
+      {
+        when: "Dia 18",
+        title: "Breakup",
+        goal: "Encerrar o ciclo ativo sem fechar a porta — sistema novo tem decisão mais longa e pode reabrir depois.",
+        message: `Oi [Nome], vou pausar o acompanhamento por aqui pra não ficar em cima. Se o projeto voltar a ser prioridade, é só me chamar — o diagnóstico que já fizemos continua valendo, não precisa refazer do zero.`
+      }
+    ],
+    rules: [
+      "O <b>diagnóstico técnico com a engenharia é obrigatório</b> antes de qualquer proposta em sistema novo — nunca pular essa etapa pra agilizar.",
+      "<b>Nunca repita o mesmo pretexto</b> em dois toques — se o lead percebe o padrão, para de responder.",
+      "12 anos de mercado, laboratório e equipe técnica própria são fatos reais e podem ser citados quando fizer sentido.",
+      "Se o cliente mencionar <b>excesso de ferro, manganês ou cálcio</b> na água, sinalizar que a Indfiltros não executa esse tipo de projeto."
+    ]
+  }
+};
+
+let current = 'a';
+
+function escapeHtml(str){
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function renderTimeline(){
+  const el = document.getElementById('timeline');
+  el.innerHTML = '';
+  DATA[current].touches.forEach((t, i) => {
+    const div = document.createElement('div');
+    div.className = 'touch';
+    div.innerHTML = `
+      <div class="touch-num">${i+1}</div>
+      <div class="touch-head">
+        <span class="touch-when">${t.when}</span>
+        <span class="touch-title">${t.title}</span>
+        <span class="touch-chevron">▾</span>
+      </div>
+      <div class="touch-body">
+        <div class="touch-inner">
+          <div class="touch-goal">${t.goal}</div>
+          <div class="script-box active">${escapeHtml(t.message)}</div>
+        </div>
+      </div>
+    `;
+    const head = div.querySelector('.touch-head');
+    head.addEventListener('click', () => div.classList.toggle('open'));
+    el.appendChild(div);
+  });
+}
+
+function renderRules(){
+  document.getElementById('rules').innerHTML = DATA[current].rules.map(r => `<li><span class="rule-text">${r}</span></li>`).join('');
+}
+
+document.querySelectorAll('.toggle-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    current = btn.dataset.branch;
+    document.querySelectorAll('.toggle-btn').forEach(b => b.classList.toggle('active', b === btn));
+    renderTimeline();
+    renderRules();
+  });
+});
+
+renderTimeline();
+renderRules();
+</script>
+</body>
+</html>
